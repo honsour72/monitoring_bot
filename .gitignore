@@ -1,0 +1,6 @@
+dist
+.idea
+__pycache__
+logs
+.env
+qodana.yaml

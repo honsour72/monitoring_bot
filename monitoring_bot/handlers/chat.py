@@ -12,15 +12,12 @@ from monitoring_bot.constants import (log,
                                       new_user_approve_message,
                                       user_passes_chat_verification_message)
 from monitoring_bot.database import Database
-from monitoring_bot.utils import create_check_new_member_keyboard, send_note_to_admin
+from monitoring_bot.utils import create_check_new_member_keyboard, send_note_to_admin, get_text_about_leaver
 
 
 async def notify_admin_about_leaver(chat_leaver: types.ChatMemberUpdated, bot: Bot) -> Any:
-    leaver = await Database.select_from_users(user_id=chat_leaver.from_user.id)
-    where = "канала @" + chat_leaver.chat.username if chat_leaver.chat.username else "чата"
-    when = leaver.enter_date if leaver else ""
-    note = f"Крыса @{chat_leaver.from_user.username} свалила из {where} {when}"
-    log.info(note)
+    text = await get_text_about_leaver(chat_leaver)
+    log.info(text)
 
     await bot.ban_chat_member(chat_id=chat_leaver.chat.id, user_id=chat_leaver.from_user.id)
 
@@ -31,7 +28,7 @@ async def notify_admin_about_leaver(chat_leaver: types.ChatMemberUpdated, bot: B
                                          enter_date=datetime.now(),
                                          leave_date=datetime.now(),
                                          status='banned')
-    await send_note_to_admin(bot, note)
+    await send_note_to_admin(bot, text)
 
 
 async def handle_new_member(new_chat_member: types.ChatMemberUpdated, bot: Bot, newbies: list) -> None:

@@ -64,10 +64,15 @@ async def get_text_about_leaver(chat_leaver: ChatMemberUpdated) -> str:
     leaver = await Database.select_from_users(user_id=chat_leaver.from_user.id)
     where = "канала @" + chat_leaver.chat.username if chat_leaver.chat.username else "чата"
     when = leaver.enter_date if leaver else ""
-    rat_id = chat_leaver.from_user.id
     if chat_leaver.from_user.username:
         who = "@" + chat_leaver.from_user.username
     else:
-        who = chat_leaver.from_user.first_name + ' ' + chat_leaver.from_user.last_name
-    note = f"Крыса {who} (ID={rat_id}) свалила из {where} {when}"
+        who = ""
+        if chat_leaver.from_user.first_name:
+            who += chat_leaver.from_user.first_name
+        if chat_leaver.from_user.last_name:
+            who += " " + chat_leaver.from_user.last_name
+        else:
+            who = f"ID={chat_leaver.from_user.id}"
+    note = f"Крыса {who} свалила из {where} {when}"
     return note

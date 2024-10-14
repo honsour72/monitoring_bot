@@ -1,8 +1,8 @@
 import asyncio
 from aiogram import Dispatcher, Bot
 
-from .constants import token
-from .handlers import admin, user, chat
+from monitoring_bot.constants import token
+from monitoring_bot.handlers import admin, user, chat
 
 
 async def main():

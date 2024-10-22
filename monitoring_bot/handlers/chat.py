@@ -41,6 +41,7 @@ async def handle_new_member(new_chat_member: types.ChatMemberUpdated, bot: Bot, 
                                      disable_notification=True)
     else:
         log.info(f"User @{new_chat_member.from_user.username} enter the channel @{new_chat_member.chat.username}")
+        await send_note_to_admin(bot, text=f"На канале новый подписчек @{new_chat_member.from_user.username}")
         success_insertion = await Database.insert_into_users(user_id=new_chat_member.from_user.id,
                                                              username=new_chat_member.from_user.username,
                                                              enter_date=datetime.now(),
@@ -48,7 +49,6 @@ async def handle_new_member(new_chat_member: types.ChatMemberUpdated, bot: Bot, 
         # User can write bot at first, so we just need to update it status
         if not success_insertion:
             await Database.update_user(user_id=new_chat_member.from_user.id, status='member', leave_date=None)
-        await send_note_to_admin(bot, text=f"На канале новый подписчек @{new_chat_member.from_user.username}")
 
 
 async def check_new_member_is_human(query: types.CallbackQuery, bot: Bot, newbies: list) -> None:

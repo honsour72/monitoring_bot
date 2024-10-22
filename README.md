@@ -78,4 +78,5 @@ docker compose up --build
 * [X] For admin: show banned users and unban users
 * [X] For admin: ban users
 * [ ] For admin: receive different message types from users: docs, geo, files, etc
-* [X] Deny user messages if they aren't subscribed on a channel 
+* [X] Deny user messages if they aren't subscribed on a channel
+* [ ] Это же каких размеров должен быть разум, чтобы проводить тесты на продовой бд? 🤡

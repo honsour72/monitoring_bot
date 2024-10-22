@@ -22,7 +22,6 @@ psycopg2 = "^2.9.9"
 
 [tool.pytest.ini_options]
 minversion = "6.0"
-addopts = "--disable-pytest-warnings --tb=line -v"
 testpaths = [
     "tests",
 ]

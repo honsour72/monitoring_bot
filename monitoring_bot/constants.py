@@ -22,7 +22,7 @@ db_port = getenv('DB_PORT')
 connection_url = f"postgresql+asyncpg://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}"
 
 log_level = "DEBUG"
-log_path = "..\\logs\\bot.log"
+log_path = "logs\\bot.log"
 log_format = "{time:YYYY:MMM:DD:ddd:HH:mm:ss} | {level} | {name}:{function}:{line} | {message}"
 log.add(log_path, format=log_format, colorize=True, enqueue=True, level=log_level)
 
